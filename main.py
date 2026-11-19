@@ -31,6 +31,9 @@ try:
             weight = line.strip()
             if weight != "":
                 knapsack.weights.append(int(weight))
+
+    for i in range(len(knapsack.weights)):
+        knapsack.items.append((knapsack.values[i], knapsack.weights[i]))
           
 except FileNotFoundError as e:
     print(f"Error: file not found: {e.filename}")
@@ -39,3 +42,4 @@ except FileNotFoundError as e:
 print("Capacity:", knapsack.capacity)
 print("Values:", knapsack.values)
 print("Weights:", knapsack.weights)
+print("Items:", knapsack.items)

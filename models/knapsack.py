@@ -3,3 +3,4 @@ class Knapsack:
         self.capacity = 0
         self.values = []
         self.weights = []
+        self.items = []
