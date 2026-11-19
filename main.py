@@ -39,12 +39,6 @@ except FileNotFoundError as e:
     print(f"Error: file not found: {e.filename}")
     exit(1)
 
-print("Capacity:", knapsack.capacity)
-print("Values:", knapsack.values)
-print("Weights:", knapsack.weights)
-print("Items:", knapsack.items)
-
-print()
 def traditional_approach(knapsack):
     """
     Task 1a: Dynamic Programming (traditional) approach
@@ -74,11 +68,23 @@ def traditional_approach(knapsack):
     optimal_subset = []
 
     # Backtrack to get optimal subset
-    # TODO
+    cur_weight = knapsack.capacity
+    for i in range(len(knapsack.items), 0, -1):
+        if (dp[i - 1][cur_weight] == dp[i][cur_weight]):
+            continue
+
+        cur_weight -= knapsack.weights[i - 1]
+        optimal_subset.append(i)
+
 
     optimal_value = dp[len(knapsack.items)][knapsack.capacity]
 
-    return (optimal_value, optimal_subset)
+    return (optimal_value, optimal_subset[::-1])
 
-optimal_results = traditional_approach(knapsack)
-print("Optimal Results:", optimal_results)
+traditional_approach_results = traditional_approach(knapsack)
+
+print(f"Knapsack capacity: {knapsack.capacity}. Total number of items = f{len(knapsack.items)}")
+print()
+print(f"(1a) Traditional Dynamic Programming Optimal value: {traditional_approach_results[0]}")
+print(f"(1a) Traditional Dynamic Programming Optimal subset: {traditional_approach_results[1]}")
+print("(1a) Traditional Dynamic Programming Total Basic Ops: TBD TODO DO THIS DON'T FORGET DO THIS DON'T FORGET PLZ")
