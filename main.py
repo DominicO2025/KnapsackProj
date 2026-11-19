@@ -36,4 +36,6 @@ except FileNotFoundError as e:
     print(f"Error: file not found: {e.filename}")
     exit(1)
 
-print(knapsack.capacity, knapsack.values, knapsack.weights)
+print("Capacity:", knapsack.capacity)
+print("Values:", knapsack.values)
+print("Weights:", knapsack.weights)
