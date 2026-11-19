@@ -1,0 +1,23 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: main.py (prompt for input file number)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.py",
+            "args": ["${input:inputFileNumber}"],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        }
+    ],
+    "inputs": [
+        {
+            "id": "inputFileNumber",
+            "type": "promptString",
+            "description": "Input file number (e.g. 1 for p01_*.txt)",
+            "default": "0"
+        }
+    ]
+}
