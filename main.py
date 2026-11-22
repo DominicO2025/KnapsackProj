@@ -82,17 +82,17 @@ def traditional_approach(knapsack):
     return (optimal_value, optimal_subset[::-1])
 
 
-def dfs(i,j, knapsack, dp, optimal_subset):
+def dfs(i,j, knapsack, dp):
     if i <= 0 or j <= 0: #return 0 if out of bounds
         return 0, []
 
     #calling functions
     if (j < knapsack.weights[i - 1]):  # skip current if the weight of the current item is greater then capacity
-        return dfs(i-1, j, knapsack, dp, optimal_subset)
+        return dfs(i-1, j, knapsack, dp)
 
     #grabbing vals from recurrsion
-    item_above, op_sub1 = dfs(i-1, j, knapsack, dp, optimal_subset)
-    item_previous, op_sub2 = dfs(i-1, j - knapsack.weights[i - 1], knapsack, dp, optimal_subset)
+    item_above, op_sub1 = dfs(i-1, j, knapsack, dp)
+    item_previous, op_sub2 = dfs(i-1, j - knapsack.weights[i - 1], knapsack, dp)
 
     #Have to do if statement, to know which val to put into current element with correct optimal subset
     if (item_above > (item_previous + knapsack.values[i-1])):
@@ -112,9 +112,7 @@ def memory_function(knapsack):
     # Create an (items x Capacity) table
     dp = [[0] * (knapsack.capacity + 1) for _ in range(len(knapsack.items) + 1)]
 
-    optimal_subset = []
-
-    optimal_value, optimal_subset = dfs(len(knapsack.items), knapsack.capacity, knapsack, dp, optimal_subset)
+    optimal_value, optimal_subset = dfs(len(knapsack.items), knapsack.capacity, knapsack, dp)
 
     return (optimal_value, optimal_subset)
 
