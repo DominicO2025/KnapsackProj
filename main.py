@@ -3,15 +3,16 @@ from models.knapsack import Knapsack
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument("input_file_number",
+parser.add_argument("input_file_number", 
+                    type=int,
                     help="Number of the text files to read the knapsack data from.")
 
 args = parser.parse_args()
 
 
-capacity_file_name = f"p0{args.input_file_number}_c.txt"
-values_file_name = f"p0{args.input_file_number}_v.txt"
-weights_file_name = f"p0{args.input_file_number}_w.txt"
+capacity_file_name = f"p{args.input_file_number:02d}_c.txt"
+values_file_name = f"p{args.input_file_number:02d}_v.txt"
+weights_file_name = f"p{args.input_file_number:02d}_w.txt"
 
 knapsack = Knapsack()
 
