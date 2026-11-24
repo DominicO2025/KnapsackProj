@@ -82,7 +82,7 @@ def traditional_approach(knapsack):
 
     return (optimal_value, optimal_subset[::-1])
 
-
+#This is the memory function implementation of the knapsack problem.
 def dfs(i,j, knapsack, dp):
     if i <= 0 or j <= 0: #return 0 if out of bounds
         return 0, []
@@ -117,7 +117,46 @@ def memory_function(knapsack):
 
     return (optimal_value, optimal_subset)
 
+#Memory function implementation of the knapsack problem, but with a hash table instead of a 2D array.
 
+def dfs_hash(i,j, knapsack, dp):
+    if i <= 0 or j <= 0: #return 0 if out of bounds
+        return 0, []
+
+    #calling functions
+    if (j < knapsack.weights[i - 1]):  # skip current if the weight of the current item is greater then capacity
+        return dfs(i-1, j, knapsack, dp)
+
+    #grabbing vals from recurrsion
+    item_above, op_sub1 = dfs(i-1, j, knapsack, dp)
+    item_previous, op_sub2 = dfs(i-1, j - knapsack.weights[i - 1], knapsack, dp)
+
+    #Have to do if statement, to know which val to put into current element with correct optimal subset
+    if (item_above > (item_previous + knapsack.values[i-1])):
+        dp[i][j] = item_above
+        return item_above, op_sub1
+
+    dp[i][j] = item_previous + knapsack.values[i-1]
+
+    return item_previous + knapsack.values[i-1], op_sub2 + [i]
+
+def memory_function_hash(knapsack):
+    """
+    Task 1a: Dynamic Programming (memory function) approach, but using a hash table
+
+    Returns a tuple (optimal_value, optimal_subset)
+    """
+    # replace with hash table implementation
+    dp = set()
+
+    optimal_value, optimal_subset = dfs_hash(len(knapsack.items), knapsack.capacity, knapsack, dp)
+
+    return (optimal_value, optimal_subset)
+
+
+
+
+#actual main function call
 traditional_approach_results = traditional_approach(knapsack)
 
 memory_function_results = memory_function(knapsack)
