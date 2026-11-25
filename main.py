@@ -87,6 +87,9 @@ def dfs(i,j, knapsack, dp):
     if i <= 0 or j <= 0: #return 0 if out of bounds
         return 0, []
 
+    if dp[i][j] is not None:
+        return dp[i][j]
+
     #calling functions
     if (j < knapsack.weights[i - 1]):  # skip current if the weight of the current item is greater then capacity
         return dfs(i-1, j, knapsack, dp)
