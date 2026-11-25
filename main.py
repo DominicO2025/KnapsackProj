@@ -34,6 +34,8 @@ try:
                 knapsack.weights.append(int(weight))
 
     for i in range(len(knapsack.weights)):
+        # knapsack.items consists of tuples, (j, k), where j is the value
+        # of the ith item and k is the weight of the ith item 
         knapsack.items.append((knapsack.values[i], knapsack.weights[i]))
           
 except FileNotFoundError as e:
@@ -120,8 +122,83 @@ def memory_function(knapsack):
 
     return (optimal_value, optimal_subset)
 
-#Memory function implementation of the knapsack problem, but with a hash table instead of a 2D array.
+def greedy_approach_with_sorting(knapsack):
+    """
+    Task 2a: Greedy approach using sorting
 
+    Returns a tuple (optimal_value, optimal_subset)
+    """
+
+    value_to_weight = []
+
+    def merge_sort(arr):
+        """
+        Sorts an array in place, in descending order, using merge sort.
+
+        arr is an array of (item_number, ratio) tuples, where item_number is
+                the item's 1-based index and ratio is its value/weight ratio.
+                Tuples are compared on the ratio (arr[i][1]) only.
+        """
+        if len(arr) > 1:
+
+            left = arr[:len(arr) // 2]
+            right = arr[len(arr) // 2:]
+
+            merge_sort(left)
+            merge_sort(right)
+
+            i, j, k = 0, 0, 0
+
+            # Merge the subarrays
+            while i < len(left) and j < len(right):
+                if left[i][1] >= right[j][1]:
+                    arr[k] = left[i]
+                    i += 1
+                else:
+                    arr[k] = right[j]
+                    j += 1
+
+                k += 1
+
+            while i < len(left):
+                arr[k] = left[i]
+                i += 1
+                k += 1
+
+            while j < len(right):
+                arr[k] = right[j]
+                j += 1
+                k += 1
+ 
+    for i in range(len(knapsack.items)):
+        item = knapsack.items[i]
+
+        # Storing the item number and tuple will make it
+        # easier to sort the value_to_weight array  
+        item_to_ratio_tuple = (i + 1, item[0] / item[1])
+        value_to_weight.append(item_to_ratio_tuple)
+
+    merge_sort(value_to_weight)
+
+    cur_weight = 0
+    optimal_value = 0
+    optimal_subset = []
+
+    # Go through items from highest to lowest value/weight ratio
+    for item_number, _ in value_to_weight:
+        value, weight = knapsack.items[item_number - 1]
+
+        # Stop at the first item that doesn't fit
+        if cur_weight + weight > knapsack.capacity:
+            break
+
+        cur_weight += weight
+        optimal_value += value
+        optimal_subset.append(item_number)
+
+    return (optimal_value, sorted(optimal_subset))
+
+#Memory function implementation of the knapsack problem, but with a hash table instead of a 2D array.
 def dfs_hash(i,j, knapsack, dp):
     if i <= 0 or j <= 0: #return 0 if out of bounds
         return 0, []
@@ -157,12 +234,10 @@ def memory_function_hash(knapsack):
     return (optimal_value, optimal_subset)
 
 
-
-
 #actual main function call
 traditional_approach_results = traditional_approach(knapsack)
-
 memory_function_results = memory_function(knapsack)
+greedy_approach = greedy_approach_with_sorting(knapsack)
 
 print(f"Knapsack capacity: {knapsack.capacity}. Total number of items = f{len(knapsack.items)}")
 print()
@@ -174,3 +249,8 @@ print()
 print(f"(1b) Memory Function Dynamic Programming Optimal value: {memory_function_results[0]}")
 print(f"(1b) Memory Function Dynamic Programming Optimal subset: {memory_function_results[1]}")
 print("(1b) Memory Function Dynamic Programming Total Basic Ops: TBD TODO DO THIS DON'T FORGET DO THIS DON'T FORGET PLZ")
+
+print()
+print(f"(2a) Greedy Approach Optimal value: {greedy_approach[0]}")
+print(f"(2a) Greedy Approach Optimal subset: {greedy_approach[1]}")
+print("(2a) Greedy Approach Total Basic Ops: TBD TODO DO THIS DON'T FORGET DO THIS DON'T FORGET PLZ")
