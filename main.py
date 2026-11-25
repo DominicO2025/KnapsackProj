@@ -200,6 +200,9 @@ def greedy_approach_with_sorting(knapsack):
 
 #Memory function implementation of the knapsack problem, but with a hash table instead of a 2D array.
 def dfs_hash(i,j, knapsack, dp):
+
+    key = (i - 1) * knapsack.capacity + 1
+
     if i <= 0 or j <= 0: #return 0 if out of bounds
         return 0, []
 
@@ -226,6 +229,9 @@ def memory_function_hash(knapsack):
 
     Returns a tuple (optimal_value, optimal_subset)
     """
+
+    numBuckets = knapsack.setBuckets()
+
     # replace with hash table implementation
     dp = set()
 
