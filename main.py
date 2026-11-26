@@ -245,7 +245,7 @@ traditional_approach_results = traditional_approach(knapsack)
 memory_function_results = memory_function(knapsack)
 greedy_approach = greedy_approach_with_sorting(knapsack)
 
-print(f"Knapsack capacity: {knapsack.capacity}. Total number of items = f{len(knapsack.items)}")
+print(f"Knapsack capacity: {knapsack.capacity}. Total number of items = {len(knapsack.items)}")
 print()
 print(f"(1a) Traditional Dynamic Programming Optimal value: {traditional_approach_results[0]}")
 print(f"(1a) Traditional Dynamic Programming Optimal subset: {traditional_approach_results[1]}")
